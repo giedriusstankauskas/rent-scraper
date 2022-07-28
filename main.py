@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Google form URL
-rent_form = os.getenv('rent_form')
+rent_form = os.getenv('rent_form_url')
 # Zillow.com URL
 url = os.getenv('zillow_url')
 
