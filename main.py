@@ -39,4 +39,27 @@ addresses = [address.get_text() for address in all_address_elements]
 
 # get prices of houses
 all_price_elements = soup.select(".list-card-price")
-prices = [price.get_text().split("+") for price in all_price_elements]
+prices = [price.get_text().split("+")[0] for price in all_price_elements]
+
+print(links)
+print(addresses)
+print(prices)
+
+# selenium
+chrome_driver_path = os.getenv('chrome_path')
+s = Service(executable_path=chrome_driver_path)
+driver = webdriver.Chrome(service=s)
+
+for n in range(len(links)):
+    driver.get(rent_form)
+    time.sleep(2)
+    address_input = driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input')
+    price_input = driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input')
+    link_input = driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div/div[1]/input')
+    submit_button = driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div[1]/div/span/span')
+
+    address_input.send_keys(addresses[n])
+    price_input.send_keys(prices[n])
+    link_input.send_keys(links[n])
+    submit_button.click()
+
